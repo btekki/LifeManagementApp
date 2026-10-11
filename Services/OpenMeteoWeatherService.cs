@@ -20,7 +20,7 @@ namespace LifeManagementApp.Services
         {
             try
             {
-                var url = $"{BaseUrl}?latitude{latitude}&longitude={longitude}&current=temperature_2m,wind_speed_10m&wind_speed_unit=ms";
+                var url = $"{BaseUrl}?latitude={latitude}&longitude={longitude}&current=temperature_2m,wind_speed_10m&wind_speed_unit=ms";
 
                 var response = await _httpClient.GetAsync(url);
                 response.EnsureSuccessStatusCode();
@@ -33,11 +33,11 @@ namespace LifeManagementApp.Services
 
                 return new WeatherInfo
                 {
-                    Temprature = weatherResponse.Current.Temperature,
+                    Temperature = weatherResponse.Current.Temperature,
                     WindSpeed = weatherResponse.Current.WindSpeed,
                     Latitude = latitude,
                     Longitude = longitude,
-                    TimeStamp = DateTime.UtcNow
+                    Timestamp = DateTime.UtcNow
                 };
             }
             catch (HttpRequestException ex)
