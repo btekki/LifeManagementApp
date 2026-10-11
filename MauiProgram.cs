@@ -18,6 +18,7 @@ namespace LifeManagementApp
             //Services here
             builder.Services.AddScoped<IWeatherService, OpenMeteoWeatherService>();
             builder.Services.AddHttpClient<OpenMeteoWeatherService>();
+            builder.Services.AddScoped<ITodoRepository, TodoRepository>();
 
             InitializeDatabase(dbPath);
 
