@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using LifeManagementApp.Data;
 using Microsoft.EntityFrameworkCore;
+using LifeManagementApp.Services;
 
 namespace LifeManagementApp
 {
@@ -13,6 +14,9 @@ namespace LifeManagementApp
             var dbPath = GetDatabasePath();
             builder.Services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlite($"Data Source={dbPath}"));
+
+            //Services here
+            builder.Services.AddScoped<IWeatherService, WeatherService>();
 
             InitializeDatabase(dbPath);
 
