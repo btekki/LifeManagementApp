@@ -16,7 +16,8 @@ namespace LifeManagementApp
                 options.UseSqlite($"Data Source={dbPath}"));
 
             //Services here
-            builder.Services.AddScoped<IWeatherService, WeatherService>();
+            builder.Services.AddScoped<IWeatherService, OpenMeteoWeatherService>();
+            builder.Services.AddHttpClient<OpenMeteoWeatherService>();
 
             InitializeDatabase(dbPath);
 
