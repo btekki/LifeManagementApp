@@ -2,6 +2,7 @@
 using LifeManagementApp.Data;
 using Microsoft.EntityFrameworkCore;
 using LifeManagementApp.Services;
+using LifeManagementApp.ViewModels;
 
 namespace LifeManagementApp
 {
@@ -19,7 +20,10 @@ namespace LifeManagementApp
             builder.Services.AddScoped<IWeatherService, OpenMeteoWeatherService>();
             builder.Services.AddHttpClient<OpenMeteoWeatherService>();
             builder.Services.AddScoped<ITodoRepository, TodoRepository>();
+            builder.Services.AddTransient<HomeViewModel>();
 
+
+            
             InitializeDatabase(dbPath);
 
             builder
