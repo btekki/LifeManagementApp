@@ -3,8 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:LifeManagementApp"
              x:Class="LifeManagementApp.App">
+             xmlns:converters="clr-namespace:LifeManagementApp.Converters"
     <Application.Resources>
         <ResourceDictionary>
+            <converters:PriorityToColorConverter x:Key="PriorityToColorConverter" />
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
