@@ -22,6 +22,7 @@ namespace LifeManagementApp
             builder.Services.AddScoped<ITodoRepository, TodoRepository>();
             builder.Services.AddTransient<HomeViewModel>();
             builder.Services.AddTransient<TodoListViewModel>();
+            builder.Services.AddTransient<AddTodoViewModel>();
 
 
             
