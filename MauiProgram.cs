@@ -21,6 +21,7 @@ namespace LifeManagementApp
             builder.Services.AddHttpClient<OpenMeteoWeatherService>();
             builder.Services.AddScoped<ITodoRepository, TodoRepository>();
             builder.Services.AddTransient<HomeViewModel>();
+            builder.Services.AddTransient<TodoListViewModel>();
 
 
             
