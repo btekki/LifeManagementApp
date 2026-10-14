@@ -53,7 +53,7 @@ public partial class HomeViewModel : ObservableObject
             var topTodos = (await todosTask)
                 .OrderByDescending(todo => todo.Priority)
                 .ThenBy(todo => todo.DueDate ?? DateTime.MaxValue)
-                .Take(3)
+                .Take(3);
                 
 
             TopThreeTodos = new ObservableCollection<TodoItem>(topTodos);

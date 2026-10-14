@@ -3,6 +3,7 @@ using LifeManagementApp.Data;
 using Microsoft.EntityFrameworkCore;
 using LifeManagementApp.Services;
 using LifeManagementApp.ViewModels;
+using LifeManagementApp.Views;
 
 namespace LifeManagementApp
 {
@@ -23,6 +24,10 @@ namespace LifeManagementApp
             builder.Services.AddTransient<HomeViewModel>();
             builder.Services.AddTransient<TodoListViewModel>();
             builder.Services.AddTransient<AddTodoViewModel>();
+            builder.Services.AddTransient<HomePage>();
+            builder.Services.AddTransient<TodoListPage>();
+            builder.Services.AddTransient<AddTodoPage>();
+            builder.Services.AddTransient<AppShell>();
 
 
             
