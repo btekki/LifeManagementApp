@@ -16,8 +16,17 @@ public partial class AddTodoViewModel : ObservableObject
     private int priority = 3;
 
     [ObservableProperty]
-    private DateTime? dueDate;
+    private DateTime dueDatePickerDate = DateTime.Today;
 
+    [ObservableProperty]
+    private bool hasDueDate;
+
+    public DateTime? DueDate => HasDueDate ? DueDatePickerDate : null;
+
+    partial void OnHasDueDateChanged(bool value) => OnPropertyChanged(nameof(DueDate));
+
+    partial void OnDueDatePickerDateChanged(DateTime value) => OnPropertyChanged(nameof(DueDate));
+    
     [ObservableProperty]
     private bool isLoading;
 
@@ -60,4 +69,7 @@ public partial class AddTodoViewModel : ObservableObject
             IsLoading = false;
         }
     }
+
+    [RelayCommand]
+    private Task CancelAsync()=>Shell.Current.GoToAsync("//TodoList");
 }
