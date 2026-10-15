@@ -3,8 +3,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:vm="clr-namespace:LifeManagementApp.ViewModels"
     xmlns:models="clr-namespace:LifeManagementApp.Models"
-    x:Class="LifeManagementApp.Views.HomePage">
-    x:DataType="vm:HomePageViewModel">
+    x:Class="LifeManagementApp.Views.HomePage"
+    x:DataType="vm:HomeViewModel">
 
     <ScrollView>
         <VerticalStackLayout Padding="24" Spacing="16">

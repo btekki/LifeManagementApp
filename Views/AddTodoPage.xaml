@@ -4,7 +4,7 @@
     xmlns:vm="clr-namespace:LifeManagementApp.ViewModels"
     x:Class="LifeManagementApp.Views.AddTodoPage"
     x:DataType="vm:AddTodoViewModel"
-    Title="Add todo"
+    Title="Add todo">
 
     <VerticalStackLayout Padding="20" Spacing="12">
         <Entry Placeholder="Title" Keyboard="Text" Text="{Binding Title}" />
