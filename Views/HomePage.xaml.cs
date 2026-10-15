@@ -1,6 +1,6 @@
 using LifeManagementApp.ViewModels;
 
-namespace LifemanagementApp.Views;
+namespace LifeManagementApp.Views;
 
 public partial class HomePage : ContentPage
 {
