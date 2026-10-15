@@ -1,0 +1,43 @@
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:LifeManagementApp.ViewModels"
+    xmlns:models="clr-namespace:LifeManagementApp.Models"
+    x:Class="LifeManagementApp.Views.TodoListPage"
+    x:DataType="vm:TodoListViewModel"
+    Title="Todo list">
+
+    <VerticalStackLayout Padding="16" Spacing="12">
+        <ActivityIndicator IsRunning="{Binding IsLoading}" IsVisible="{Binding IsLoading}" />
+
+        <HorizontalStackLayout Spacing="8">
+            <Button Text="Lajittele prioriteetin mukaan" Command="{Binding SortByPriorityCommand}" />
+            <Button Text="Lajittele eräpäivän mukaan" Command="{Binding SortByDueDateCommand}" />
+        </HorizontalStackLayout>
+
+        <CollectionView ItemsSource="{Binding AllTodos}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="model:TodoItem">
+                    <SwipeView>
+                        <SwipeView.RightItems>
+                            <SwipeItems Mode="Execute">
+                                <SwipeItem Text="Poista" Command="{Binding Source={RelativeSource AncestorType={x:Type vm:TodoListViewModel}},Path=DeleteTodoCommand}" CommandParameter="{Binding .}" />
+                            </SwipeItems>
+                        </SwipeView.RightItems>
+
+                        <Grid ColumnDefinitions="Auto,*,Auto" RowDefinitions="Auto,Auto" Padding="8">
+                            <CheckBox IsChecked="{Binding IsDone, Mode=OneWay}" CheckedChanged="OnTodoCheckedChanged" />
+                            <Label Grid.Column="1" Text="{Binding Title}" />
+                            <Label Grid.Column="1" Grid.Row="1" Text="{Binding Priority}" TextColor="{Binding Priority, Converter={StaticRecource PriorityToColorConverter}}" />
+                            <Label Grid.Column="2" Grid.RowSpan="2" Text="{Binding DueDate, StringFormat='{}{0:d}'}" />
+                        </Grid>
+                    </SwipeView>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <Button Text="Lisää uusi tehtävä" Clicked="OnAddTodoClicked" />
+    </VerticalStackLayout>
+</ContentPage>           
+
+
