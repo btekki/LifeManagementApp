@@ -61,6 +61,7 @@ public partial class AddTodoViewModel : ObservableObject
             };
 
             await _todoRepository.AddTodoAsync(todo);
+            await Shell.Current.GoToAsync("//TodoList");
 
         }
 
