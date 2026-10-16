@@ -25,7 +25,7 @@
             </Label.Triggers>
         </Label>
 
-        <Button Text="Tallenna" Command="{Binding SaveToCommand}" />
+        <Button Text="Tallenna" Command="{Binding SaveTodoCommand}" />
         <Button Text="Peruuta" Command="{Binding CancelCommand}" />
 
     </VerticalStackLayout>
