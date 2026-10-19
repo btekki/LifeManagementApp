@@ -1,4 +1,5 @@
 using LifeManagementApp.ViewModels;
+using LifeManagementApp.Models;
 
 namespace LifeManagementApp.Views;
 

@@ -4,27 +4,28 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:LifeManagementApp"
-    Title="LifeManagementApp">
-    FlyoutBehavior="Disabled"
+    xmlns:views="clr-namespace:LifeManagementApp.Views"
+    Title="LifeManagementApp"
+    FlyoutBehavior="Disabled">
 
     <TabBar>
 
         <ShellContent
             Title="Home"
             Icon="home.png"
-            ContentTemplate="{DataTemplate local:MainPage}"
+            ContentTemplate="{DataTemplate views:HomePage}"
             Route="Home" />
 
         <ShellContent
             Title="Todo List"
             Icon="list.png"
-            ContentTemplate="{DataTemplate local:TodoListPage}"
+            ContentTemplate="{DataTemplate views:TodoListPage}"
             Route="TodoList" />
 
         <ShellContent
             Title="Add Todo"
             Icon="add.png"
-            ContentTemplate="{DataTemplate local:AddTodoPage}"
+            ContentTemplate="{DataTemplate views:AddTodoPage}"
             Route="AddTodo" />
 
     </TabBar>

@@ -9,7 +9,7 @@
     <VerticalStackLayout Padding="20" Spacing="12">
         <Entry Placeholder="Title" Keyboard="Text" Text="{Binding Title}" />
         <Label Text="{Binding Priority, StringFormat='Priority: {0}'}" />
-        <Stepper Minimun="1" Maximum="5" Increment="1" Value="{Binding Priority}" />
+        <Stepper Minimum="1" Maximum="5" Increment="1" Value="{Binding Priority}" />
 
         <HorizontalStackLayout Spacing="12">
             <Label Text="Aseta eräpäivä" VerticalOptions="Center" />

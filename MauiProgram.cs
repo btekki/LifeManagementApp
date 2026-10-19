@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using LifeManagementApp.Services;
 using LifeManagementApp.ViewModels;
 using LifeManagementApp.Views;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Http;
 
 namespace LifeManagementApp
 {

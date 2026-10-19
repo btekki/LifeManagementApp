@@ -1,7 +1,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using LifeManagementApp.Models;
-using LifemanagementApp.Services;
+using LifeManagementApp.Services;
 using System.Collections.ObjectModel;
 
 namespace LifeManagementApp.ViewModels;
