@@ -23,6 +23,17 @@ public partial class AddTodoViewModel : ObservableObject
 
     public DateTime? DueDate => HasDueDate ? DueDatePickerDate : null;
 
+    private const int MinPriority = 1;
+    private const int MaxPriority = 5;
+
+    // Pidetään arvo rajoissa, jotta Stepperin sisäinen arvo ei karkaa rajojen yli
+    partial void OnPriorityChanged(int value)
+    {
+        var clamped = Math.Clamp(value, MinPriority, MaxPriority);
+        if (clamped != value)
+            Priority = clamped;
+    }
+
     partial void OnHasDueDateChanged(bool value) => OnPropertyChanged(nameof(DueDate));
 
     partial void OnDueDatePickerDateChanged(DateTime value) => OnPropertyChanged(nameof(DueDate));
