@@ -51,7 +51,7 @@ public partial class AddTodoViewModel : ObservableObject
 
         try
         {
-            var todo = new Todo
+            var todo = new TodoItem
             {
                 Title = Title.Trim(),
                 Priority = Priority,
@@ -61,6 +61,7 @@ public partial class AddTodoViewModel : ObservableObject
             };
 
             await _todoRepository.AddTodoAsync(todo);
+            await Shell.Current.GoToAsync("//TodoList");
 
         }
 

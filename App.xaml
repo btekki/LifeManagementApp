@@ -2,8 +2,8 @@
 <Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:LifeManagementApp"
-             x:Class="LifeManagementApp.App">
              xmlns:converters="clr-namespace:LifeManagementApp.Converters"
+             x:Class="LifeManagementApp.App">
     <Application.Resources>
         <ResourceDictionary>
             <converters:PriorityToColorConverter x:Key="PriorityToColorConverter" />

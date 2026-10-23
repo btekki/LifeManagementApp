@@ -16,7 +16,7 @@ namespace LifeManagementApp.Services
             _httpClient = httpClient;
         }
 
-        public async Task<WeatherInfo?>GetCurrentWeatherAsync(double latitude, double longitude)
+        public async Task<WeatherInfo?> GetCurrentWeatherAsync(double latitude, double longitude)
         {
             try
             {
@@ -35,9 +35,8 @@ namespace LifeManagementApp.Services
                 {
                     Temperature = weatherResponse.Current.Temperature,
                     WindSpeed = weatherResponse.Current.WindSpeed,
-                    Latitude = latitude,
-                    Longitude = longitude,
-                    Timestamp = DateTime.UtcNow
+                    LastUpdated = DateTime.UtcNow,
+                    Location = $"{latitude},{longitude}"
                 };
             }
             catch (HttpRequestException ex)
@@ -52,12 +51,12 @@ namespace LifeManagementApp.Services
             }
         }
 
-        private class  OpenMeteoResponse
+        private class OpenMeteoWeatherResponse
         {
             [JsonPropertyName("current")]
             public CurrentWeather? Current { get; set; }
         }
-        private class  CurrentWeather
+        private class CurrentWeather
         {
             [JsonPropertyName("temperature_2m")]
             public double Temperature { get; set; }
@@ -66,4 +65,17 @@ namespace LifeManagementApp.Services
             public double WindSpeed { get; set; }
         }
     }
+}
+public class WeatherInfo
+{
+  public int Id { get; set; }
+  public required double Temperature { get; set; }
+  public required double WindSpeed { get; set; }
+  public DateTime LastUpdated { get; set; }
+  public string? Location { get; set; }
+
+  // Add these if other code expects them
+  public double Latitude { get; set; }
+  public double Longitude { get; set; }
+  public DateTime Timestamp { get; set; }
 }
