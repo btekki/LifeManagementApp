@@ -9,4 +9,13 @@ public partial class AddTodoPage : ContentPage
         InitializeComponent();
         BindingContext = viewModel;
     }
+
+    // Tyhjennetään lomake poistuttaessa, ettei muokattavan tehtävän tiedot jää näkyviin
+    protected override void OnDisappearing()
+    {
+        base.OnDisappearing();
+
+        if (BindingContext is AddTodoViewModel viewModel)
+            viewModel.Reset();
+    }
 }

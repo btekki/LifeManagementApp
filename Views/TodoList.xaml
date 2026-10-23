@@ -25,11 +25,12 @@
                             </SwipeItems>
                         </SwipeView.RightItems>
 
-                        <Grid ColumnDefinitions="Auto,*,Auto" RowDefinitions="Auto,Auto" Padding="8">
+                        <Grid ColumnDefinitions="Auto,*,Auto,Auto" RowDefinitions="Auto,Auto" Padding="8">
                             <CheckBox IsChecked="{Binding IsDone, Mode=OneWay}" CheckedChanged="OnTodoCheckedChanged" />
                             <Label Grid.Column="1" Text="{Binding Title}" />
                             <Label Grid.Column="1" Grid.Row="1" Text="{Binding Priority}" TextColor="{Binding Priority, Converter={StaticResource PriorityToColorConverter}}" />
                             <Label Grid.Column="2" Grid.RowSpan="2" Text="{Binding DueDate, StringFormat='{}{0:d}'}" />
+                            <Button Grid.Column="3" Grid.RowSpan="2" Text="Muokkaa" Clicked="OnEditTodoClicked" />
                         </Grid>
                     </SwipeView>
                 </DataTemplate>

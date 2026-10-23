@@ -5,9 +5,10 @@ using LifeManagementApp.Services;
 
 namespace LifeManagementApp.ViewModels;
 
-public partial class AddTodoViewModel : ObservableObject
+public partial class AddTodoViewModel : ObservableObject, IQueryAttributable
 {
     private readonly ITodoRepository _todoRepository;
+    private TodoItem? _editingTodo;
 
     [ObservableProperty] 
     private string title = string.Empty;
@@ -49,6 +50,48 @@ public partial class AddTodoViewModel : ObservableObject
         _todoRepository = todoRepository;
     }
 
+    public bool IsEditing => _editingTodo != null;
+
+    public string SaveButtonText => IsEditing ? "Tallenna muutokset" : "Tallenna";
+
+    public async void ApplyQueryAttributes(IDictionary<string, object> query)
+    {
+        if (!query.TryGetValue("id", out var idValue)
+            || !int.TryParse(idValue?.ToString(), out var id)
+            || id <= 0)
+            return;
+
+        query.Remove("id");
+        var todo = await _todoRepository.GetTodoByIdAsync(id);
+        if (todo == null)
+            return;
+
+        _editingTodo = todo;
+        Title = todo.Title;
+        Priority = todo.Priority;
+        HasDueDate = todo.DueDate.HasValue;
+        DueDatePickerDate = todo.DueDate ?? DateTime.Today;
+        ErrorMessage = string.Empty;
+        NotifyEditStateChanged();
+    }
+
+    public void Reset()
+    {
+        _editingTodo = null;
+        Title = string.Empty;
+        Priority = 3;
+        HasDueDate = false;
+        DueDatePickerDate = DateTime.Today;
+        ErrorMessage = string.Empty;
+        NotifyEditStateChanged();
+    }
+
+    private void NotifyEditStateChanged()
+    {
+        OnPropertyChanged(nameof(IsEditing));
+        OnPropertyChanged(nameof(SaveButtonText));
+    }
+
     [RelayCommand]
     private async Task SaveTodoAsync()
     {
@@ -62,16 +105,28 @@ public partial class AddTodoViewModel : ObservableObject
 
         try
         {
-            var todo = new TodoItem
+            if (_editingTodo != null)
             {
-                Title = Title.Trim(),
-                Priority = Priority,
-                DueDate = DueDate,
-                IsDone = false,
-                CreatedAt = DateTime.UtcNow
-            };
+                _editingTodo.Title = Title.Trim();
+                _editingTodo.Priority = Priority;
+                _editingTodo.DueDate = DueDate;
+                await _todoRepository.UpdateTodoAsync(_editingTodo);
+            }
+            else
+            {
+                var todo = new TodoItem
+                {
+                    Title = Title.Trim(),
+                    Priority = Priority,
+                    DueDate = DueDate,
+                    IsDone = false,
+                    CreatedAt = DateTime.UtcNow
+                };
 
-            await _todoRepository.AddTodoAsync(todo);
+                await _todoRepository.AddTodoAsync(todo);
+            }
+
+            Reset();
             await Shell.Current.GoToAsync("//TodoList");
 
         }
@@ -83,5 +138,20 @@ public partial class AddTodoViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private Task CancelAsync()=>Shell.Current.GoToAsync("//TodoList");
+    private async Task DeleteTodoAsync()
+    {
+        if (_editingTodo == null)
+            return;
+
+        await _todoRepository.DeleteTodoAsync(_editingTodo.Id);
+        Reset();
+        await Shell.Current.GoToAsync("//TodoList");
+    }
+
+    [RelayCommand]
+    private async Task CancelAsync()
+    {
+        Reset();
+        await Shell.Current.GoToAsync("//TodoList");
+    }
 }

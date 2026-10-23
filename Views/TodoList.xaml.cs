@@ -26,6 +26,13 @@ public partial class TodoListPage : ContentPage
         await viewModel.ToggleTodoCommand.ExecuteAsync(todo);
     }
 
+    private async void OnEditTodoClicked(object sender, EventArgs e)
+    {
+        if(sender is not Button button || button.BindingContext is not TodoItem todo)
+            return;
+        await Shell.Current.GoToAsync($"//AddTodo?id={todo.Id}");
+    }
+
     private async void OnAddTodoClicked(object sender, EventArgs e)
     {
         await Shell.Current.GoToAsync("//AddTodo");
