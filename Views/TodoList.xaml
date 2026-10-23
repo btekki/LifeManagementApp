@@ -13,6 +13,7 @@
         <HorizontalStackLayout Spacing="8">
             <Button Text="Lajittele prioriteetin mukaan" Command="{Binding SortByPriorityCommand}" />
             <Button Text="Lajittele eräpäivän mukaan" Command="{Binding SortByDueDateCommand}" />
+            <Button Text="{Binding ShowDoneButtonText}" Command="{Binding ToggleShowDoneCommand}" />
         </HorizontalStackLayout>
 
         <CollectionView ItemsSource="{Binding AllTodos}">
@@ -25,11 +26,25 @@
                             </SwipeItems>
                         </SwipeView.RightItems>
 
-                        <Grid ColumnDefinitions="Auto,*,Auto" RowDefinitions="Auto,Auto" Padding="8">
-                            <CheckBox IsChecked="{Binding IsDone, Mode=OneWay}" CheckedChanged="OnTodoCheckedChanged" />
-                            <Label Grid.Column="1" Text="{Binding Title}" />
+                        <Grid ColumnDefinitions="Auto,*,Auto,Auto" RowDefinitions="Auto,Auto" Padding="8">
+                            <Button Text="Valmis" Clicked="OnToggleDoneClicked">
+                                <Button.Triggers>
+                                    <DataTrigger TargetType="Button" Binding="{Binding IsDone}" Value="True">
+                                        <Setter Property="Text" Value="Kumoa" />
+                                    </DataTrigger>
+                                </Button.Triggers>
+                            </Button>
+                            <Label Grid.Column="1" Text="{Binding Title}">
+                                <Label.Triggers>
+                                    <DataTrigger TargetType="Label" Binding="{Binding IsDone}" Value="True">
+                                        <Setter Property="TextDecorations" Value="Strikethrough" />
+                                        <Setter Property="TextColor" Value="Gray" />
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
                             <Label Grid.Column="1" Grid.Row="1" Text="{Binding Priority}" TextColor="{Binding Priority, Converter={StaticResource PriorityToColorConverter}}" />
                             <Label Grid.Column="2" Grid.RowSpan="2" Text="{Binding DueDate, StringFormat='{}{0:d}'}" />
+                            <Button Grid.Column="3" Grid.RowSpan="2" Text="Muokkaa" Clicked="OnEditTodoClicked" />
                         </Grid>
                     </SwipeView>
                 </DataTemplate>

@@ -25,8 +25,9 @@
             </Label.Triggers>
         </Label>
 
-        <Button Text="Tallenna" Command="{Binding SaveTodoCommand}" />
+        <Button Text="{Binding SaveButtonText}" Command="{Binding SaveTodoCommand}" />
         <Button Text="Peruuta" Command="{Binding CancelCommand}" />
+        <Button Text="Poista tehtävä" Command="{Binding DeleteTodoCommand}" IsVisible="{Binding IsEditing}" TextColor="Red" />
 
     </VerticalStackLayout>
 </ContentPage>

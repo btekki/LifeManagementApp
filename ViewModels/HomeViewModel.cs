@@ -51,6 +51,7 @@ public partial class HomeViewModel : ObservableObject
             CurrentWeather = await weatherTask;
 
             var topTodos = (await todosTask)
+                .Where(todo => !todo.IsDone)
                 .OrderByDescending(todo => todo.Priority)
                 .ThenBy(todo => todo.DueDate ?? DateTime.MaxValue)
                 .Take(3);
