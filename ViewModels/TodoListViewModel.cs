@@ -20,6 +20,20 @@ public partial class TodoListViewModel : ObservableObject
     [ObservableProperty]
     private bool isLoading;
 
+    [ObservableProperty]
+    private bool showDone;
+
+    public string ShowDoneButtonText => ShowDone ? "Piilota tehdyt" : "Näytä kaikki";
+
+    partial void OnShowDoneChanged(bool value)
+    {
+        OnPropertyChanged(nameof(ShowDoneButtonText));
+        ApplySort();
+    }
+
+    [RelayCommand]
+    private void ToggleShowDone() => ShowDone = !ShowDone;
+
     public TodoListViewModel(ITodoRepository todoRepository)
     {
         _todoRepository = todoRepository;
@@ -65,6 +79,7 @@ public partial class TodoListViewModel : ObservableObject
     {
         todo.IsDone = !todo.IsDone;
         await _todoRepository.UpdateTodoAsync(todo);
+        ApplySort();
     }
 
     [RelayCommand]
@@ -77,14 +92,16 @@ public partial class TodoListViewModel : ObservableObject
 
     private void ApplySort()
     {
+        var visibleTodos = ShowDone ? _todos : _todos.Where(todo => !todo.IsDone).ToList();
+
         IEnumerable<TodoItem> sortedTodos = SortBy switch
         {
-            0 => _todos.OrderByDescending(todo => todo.Priority),
-            1 => _todos
+            0 => visibleTodos.OrderByDescending(todo => todo.Priority),
+            1 => visibleTodos
                 .Where(todo =>
                     !todo.DueDate.HasValue || todo.DueDate.Value.Date >= DateTime.Today)
                 .OrderBy(todo => todo.DueDate ?? DateTime.MaxValue),
-            _ => _todos
+            _ => visibleTodos
             
         };
         AllTodos = new ObservableCollection<TodoItem>(sortedTodos);

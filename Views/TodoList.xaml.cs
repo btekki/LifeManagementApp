@@ -19,9 +19,9 @@ public partial class TodoListPage : ContentPage
             await viewModel.LoadTodosCommand.ExecuteAsync(null);
     }
 
-    private async void OnTodoCheckedChanged(object sender, CheckedChangedEventArgs e)
+    private async void OnToggleDoneClicked(object sender, EventArgs e)
     {
-        if(sender is not CheckBox checkBox || checkBox.BindingContext is not TodoItem todo || BindingContext is not TodoListViewModel viewModel || e.Value == todo.IsDone)
+        if(sender is not Button button || button.BindingContext is not TodoItem todo || BindingContext is not TodoListViewModel viewModel)
             return;
         await viewModel.ToggleTodoCommand.ExecuteAsync(todo);
     }
