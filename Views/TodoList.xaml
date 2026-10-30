@@ -5,18 +5,47 @@
     xmlns:models="clr-namespace:LifeManagementApp.Models"
     x:Class="LifeManagementApp.Views.TodoListPage"
     x:DataType="vm:TodoListViewModel"
-    Title="Todo list">
+    Title="Tehtävälista"
+    BackgroundColor="{AppThemeBinding Light={StaticResource MainBackground}, Dark={StaticResource MainBackgroundDark}}">
 
-    <VerticalStackLayout Padding="16" Spacing="12">
-        <ActivityIndicator IsRunning="{Binding IsLoading}" IsVisible="{Binding IsLoading}" />
+    <Grid Padding="16" RowDefinitions="Auto,Auto,Auto,*" RowSpacing="16">
+        <Button Grid.Row="0"
+            Text="Lisää uusi tehtävä"
+            Clicked="OnAddTodoClicked"
+            BackgroundColor="{StaticResource PrimaryAccent}"
+            TextColor="White" />
 
-        <HorizontalStackLayout Spacing="8">
-            <Button Text="Lajittele prioriteetin mukaan" Command="{Binding SortByPriorityCommand}" />
-            <Button Text="Lajittele eräpäivän mukaan" Command="{Binding SortByDueDateCommand}" />
-            <Button Text="{Binding ShowDoneButtonText}" Command="{Binding ToggleShowDoneCommand}" />
-        </HorizontalStackLayout>
+        <ActivityIndicator IsRunning="{Binding IsLoading}"
+            IsVisible="{Binding IsLoading}"
+            Color="{AppThemeBinding Light={StaticResource PrimaryAccentLight}, Dark={StaticResource PrimaryAccentDark}}"
+            Grid.Row="1" />
 
-        <CollectionView ItemsSource="{Binding AllTodos}">
+        <Border Grid.Row="2"
+            Stroke="{AppThemeBinding Light={StaticResource SecondaryAccentLight}, Dark={StaticResource SecondaryAccentDark}}"
+            StrokeThickness="2"
+            StrokeShape="RoundRectangle 12"
+            BackgroundColor="{AppThemeBinding Light={StaticResource SecondarySurfaceLight}, Dark={StaticResource SecondarySurfaceDark}}"
+            Padding="12">
+            <FlexLayout Direction="Row" Wrap="Wrap" JustifyContent="SpaceBetween">
+                <Button Text="Lajittele prioriteetin mukaan"
+                    Command="{Binding SortByPriorityCommand}"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryAccentLight}, Dark={StaticResource PrimaryAccentDark}}"
+                    TextColor="White"
+                    Margin="0,0,8,8" />
+                <Button Text="Lajittele eräpäivän mukaan"
+                    Command="{Binding SortByDueDateCommand}"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource SecondaryAccentLight}, Dark={StaticResource SecondaryAccentDark}}"
+                    TextColor="White"
+                    Margin="0,0,8,8" />
+                <Button Text="{Binding ShowDoneButtonText}"
+                    Command="{Binding ToggleShowDoneCommand}"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource SuccessLight}, Dark={StaticResource SuccessDark}}"
+                    TextColor="White"
+                    Margin="0,0,8,8" />
+            </FlexLayout>
+        </Border>
+
+        <CollectionView Grid.Row="3" ItemsSource="{Binding AllTodos}">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="models:TodoItem">
                     <SwipeView>
@@ -26,33 +55,53 @@
                             </SwipeItems>
                         </SwipeView.RightItems>
 
-                        <Grid ColumnDefinitions="Auto,*,Auto,Auto" RowDefinitions="Auto,Auto" Padding="8">
-                            <Button Text="Valmis" Clicked="OnToggleDoneClicked">
-                                <Button.Triggers>
-                                    <DataTrigger TargetType="Button" Binding="{Binding IsDone}" Value="True">
-                                        <Setter Property="Text" Value="Kumoa" />
-                                    </DataTrigger>
-                                </Button.Triggers>
-                            </Button>
-                            <Label Grid.Column="1" Text="{Binding Title}">
-                                <Label.Triggers>
-                                    <DataTrigger TargetType="Label" Binding="{Binding IsDone}" Value="True">
-                                        <Setter Property="TextDecorations" Value="Strikethrough" />
-                                        <Setter Property="TextColor" Value="Gray" />
-                                    </DataTrigger>
-                                </Label.Triggers>
-                            </Label>
-                            <Label Grid.Column="1" Grid.Row="1" Text="{Binding Priority}" TextColor="{Binding Priority, Converter={StaticResource PriorityToColorConverter}}" />
-                            <Label Grid.Column="2" Grid.RowSpan="2" Text="{Binding DueDate, StringFormat='{}{0:d}'}" />
-                            <Button Grid.Column="3" Grid.RowSpan="2" Text="Muokkaa" Clicked="OnEditTodoClicked" />
-                        </Grid>
+                        <Border Stroke="{AppThemeBinding Light={StaticResource BordersLight}, Dark={StaticResource BordersDark}}"
+                            StrokeThickness="1"
+                            StrokeShape="RoundRectangle 10"
+                            BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceLight}, Dark={StaticResource SurfaceDark}}"
+                            Padding="10"
+                            Margin="0,0,0,8">
+                            <Grid ColumnDefinitions="Auto,*,Auto,Auto" RowDefinitions="Auto,Auto" ColumnSpacing="8" RowSpacing="4">
+                                <Button Text="Valmis"
+                                    Clicked="OnToggleDoneClicked"
+                                    BackgroundColor="{AppThemeBinding Light={StaticResource SuccessLight}, Dark={StaticResource SuccessDark}}"
+                                    TextColor="White">
+                                    <Button.Triggers>
+                                        <DataTrigger TargetType="Button" Binding="{Binding IsDone}" Value="True">
+                                            <Setter Property="Text" Value="Kumoa" />
+                                        </DataTrigger>
+                                    </Button.Triggers>
+                                </Button>
+                                <Label Grid.Column="1"
+                                    Text="{Binding Title}"
+                                    TextColor="{AppThemeBinding Light={StaticResource PrimaryTextLight}, Dark={StaticResource PrimaryTextDark}}"
+                                    VerticalOptions="Center">
+                                    <Label.Triggers>
+                                        <DataTrigger TargetType="Label" Binding="{Binding IsDone}" Value="True">
+                                            <Setter Property="TextDecorations" Value="Strikethrough" />
+                                            <Setter Property="TextColor" Value="{StaticResource SecondaryText}" />
+                                        </DataTrigger>
+                                    </Label.Triggers>
+                                </Label>
+                                <Label Grid.Column="1" Grid.Row="1"
+                                    Text="{Binding Priority}"
+                                    TextColor="{Binding Priority, Converter={StaticResource PriorityToColorConverter}}" />
+                                <Label Grid.Column="2" Grid.RowSpan="2"
+                                    Text="{Binding DueDate, StringFormat='{}{0:d}'}"
+                                    TextColor="{AppThemeBinding Light={StaticResource SecondaryTextLight}, Dark={StaticResource SecondaryTextDark}}"
+                                    VerticalOptions="Center" />
+                                <Button Grid.Column="3" Grid.RowSpan="2"
+                                    Text="Muokkaa"
+                                    Clicked="OnEditTodoClicked"
+                                    BackgroundColor="{AppThemeBinding Light={StaticResource SecondaryAccentLight}, Dark={StaticResource SecondaryAccentDark}}"
+                                    TextColor="White" />
+                            </Grid>
+                        </Border>
                     </SwipeView>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-
-        <Button Text="Lisää uusi tehtävä" Clicked="OnAddTodoClicked" />
-    </VerticalStackLayout>
+    </Grid>
 </ContentPage>           
 
 

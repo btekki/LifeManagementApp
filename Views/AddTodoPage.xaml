@@ -4,30 +4,70 @@
     xmlns:vm="clr-namespace:LifeManagementApp.ViewModels"
     x:Class="LifeManagementApp.Views.AddTodoPage"
     x:DataType="vm:AddTodoViewModel"
-    Title="Add todo">
+    Title="Lisää tehtävä"
+    BackgroundColor="{AppThemeBinding Light={StaticResource MainBackground}, Dark={StaticResource MainBackgroundDark}}">
 
-    <VerticalStackLayout Padding="20" Spacing="12">
-        <Entry Placeholder="Title" Keyboard="Text" Text="{Binding Title}" />
-        <Label Text="{Binding Priority, StringFormat='Priority: {0}'}" />
-        <Stepper Minimum="1" Maximum="5" Increment="1" Value="{Binding Priority}" />
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="20">
+            <Border Stroke="{AppThemeBinding Light={StaticResource PrimaryAccentLight}, Dark={StaticResource PrimaryAccentDark}}"
+                StrokeThickness="2"
+                StrokeShape="RoundRectangle 12"
+                BackgroundColor="{AppThemeBinding Light={StaticResource SecondarySurfaceLight}, Dark={StaticResource SecondarySurfaceDark}}"
+                Padding="16">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="Lisää tehtävä"
+                        FontSize="22"
+                        FontAttributes="Bold"
+                        TextColor="{AppThemeBinding Light={StaticResource PrimaryAccentLight}, Dark={StaticResource PrimaryAccentDark}}" />
 
-        <HorizontalStackLayout Spacing="12">
-            <Label Text="Aseta eräpäivä" VerticalOptions="Center" />
-            <Switch IsToggled="{Binding HasDueDate}" />
-        </HorizontalStackLayout>
+                    <Entry Placeholder="Title"
+                        Keyboard="Text"
+                        Text="{Binding Title}"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceLight}, Dark={StaticResource SurfaceDark}}"
+                        TextColor="{AppThemeBinding Light={StaticResource PrimaryTextLight}, Dark={StaticResource PrimaryTextDark}}" />
 
-        <DatePicker Date="{Binding DueDatePickerDate}" IsEnabled="{Binding HasDueDate}" />
-        <Label Text="{Binding ErrorMessage}" TextColor="Red">
-            <Label.Triggers>
-                <DataTrigger TargetType="Label" Binding="{Binding ErrorMessage}" Value="">
-                    <Setter Property="IsVisible" Value="False" />
-                </DataTrigger>
-            </Label.Triggers>
-        </Label>
+                    <Label Text="{Binding Priority, StringFormat='Priority: {0}'}"
+                        TextColor="{AppThemeBinding Light={StaticResource PrimaryTextLight}, Dark={StaticResource PrimaryTextDark}}" />
+                    <Stepper Minimum="1" Maximum="5" Increment="1" Value="{Binding Priority}" />
 
-        <Button Text="{Binding SaveButtonText}" Command="{Binding SaveTodoCommand}" />
-        <Button Text="Peruuta" Command="{Binding CancelCommand}" />
-        <Button Text="Poista tehtävä" Command="{Binding DeleteTodoCommand}" IsVisible="{Binding IsEditing}" TextColor="Red" />
+                    <HorizontalStackLayout Spacing="12">
+                        <Label Text="Aseta eräpäivä"
+                            VerticalOptions="Center"
+                            TextColor="{AppThemeBinding Light={StaticResource PrimaryTextLight}, Dark={StaticResource PrimaryTextDark}}" />
+                        <Switch IsToggled="{Binding HasDueDate}"
+                            OnColor="{AppThemeBinding Light={StaticResource PrimaryAccentLight}, Dark={StaticResource PrimaryAccentDark}}" />
+                    </HorizontalStackLayout>
 
-    </VerticalStackLayout>
+                    <DatePicker Date="{Binding DueDatePickerDate}"
+                        IsEnabled="{Binding HasDueDate}"
+                        TextColor="{AppThemeBinding Light={StaticResource PrimaryTextLight}, Dark={StaticResource PrimaryTextDark}}" />
+                    <Label Text="{Binding ErrorMessage}"
+                        TextColor="{AppThemeBinding Light={StaticResource ErrorLight}, Dark={StaticResource ErrorDark}}">
+                        <Label.Triggers>
+                            <DataTrigger TargetType="Label" Binding="{Binding ErrorMessage}" Value="">
+                                <Setter Property="IsVisible" Value="False" />
+                            </DataTrigger>
+                        </Label.Triggers>
+                    </Label>
+
+                    <Button Text="{Binding SaveButtonText}"
+                        Command="{Binding SaveTodoCommand}"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryAccentLight}, Dark={StaticResource PrimaryAccentDark}}"
+                        TextColor="White" />
+                    <Button Text="Peruuta"
+                        Command="{Binding CancelCommand}"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceLight}, Dark={StaticResource SurfaceDark}}"
+                        BorderColor="{StaticResource Borders}"
+                        BorderWidth="1"
+                        TextColor="{AppThemeBinding Light={StaticResource PrimaryTextLight}, Dark={StaticResource PrimaryTextDark}}" />
+                    <Button Text="Poista tehtävä"
+                        Command="{Binding DeleteTodoCommand}"
+                        IsVisible="{Binding IsEditing}"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource ErrorLight}, Dark={StaticResource ErrorDark}}"
+                        TextColor="White" />
+                </VerticalStackLayout>
+            </Border>
+        </VerticalStackLayout>
+    </ScrollView>
+
 </ContentPage>
