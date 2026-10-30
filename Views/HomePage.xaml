@@ -20,7 +20,7 @@
             <!-- Loading Indicator -->
             <ActivityIndicator IsRunning="{Binding IsLoading}"
                 IsVisible="{Binding IsLoading}"
-                Color="{StaticResource PrimaryAccent}" />
+                Color="{AppThemeBinding Light={StaticResource PrimaryAccentLight}, Dark={StaticResource PrimaryAccentDark}}" />
 
             <!-- Top 3 Todos Card -->
             <Border Stroke="{AppThemeBinding Light={StaticResource PrimaryAccentLight}, Dark={StaticResource PrimaryAccentDark}}"
@@ -33,7 +33,7 @@
                     <Label Text="Tärkeimmät tehtävät"
                         FontSize="18"
                         FontAttributes="Bold"
-                        TextColor="{StaticResource PrimaryAccent}" />
+                        TextColor="{AppThemeBinding Light={StaticResource PrimaryAccentLight}, Dark={StaticResource PrimaryAccentDark}}" />
 
                     <CollectionView ItemsSource="{Binding TopThreeTodos}" 
                         SelectionMode="None">
@@ -89,7 +89,7 @@
                     <Label Text="Sää"
                         FontSize="18"
                         FontAttributes="Bold"
-                        TextColor="{StaticResource SecondaryAccent}" />
+                        TextColor="{AppThemeBinding Light={StaticResource SecondaryAccentLight}, Dark={StaticResource SecondaryAccentDark}}" />
 
                     <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
                         <!-- Temperature -->

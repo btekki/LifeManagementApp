@@ -18,7 +18,7 @@
                     <Label Text="Lisää tehtävä"
                         FontSize="22"
                         FontAttributes="Bold"
-                        TextColor="{StaticResource PrimaryAccent}" />
+                        TextColor="{AppThemeBinding Light={StaticResource PrimaryAccentLight}, Dark={StaticResource PrimaryAccentDark}}" />
 
                     <Entry Placeholder="Title"
                         Keyboard="Text"
@@ -35,14 +35,14 @@
                             VerticalOptions="Center"
                             TextColor="{AppThemeBinding Light={StaticResource PrimaryTextLight}, Dark={StaticResource PrimaryTextDark}}" />
                         <Switch IsToggled="{Binding HasDueDate}"
-                            OnColor="{StaticResource PrimaryAccent}" />
+                            OnColor="{AppThemeBinding Light={StaticResource PrimaryAccentLight}, Dark={StaticResource PrimaryAccentDark}}" />
                     </HorizontalStackLayout>
 
                     <DatePicker Date="{Binding DueDatePickerDate}"
                         IsEnabled="{Binding HasDueDate}"
                         TextColor="{AppThemeBinding Light={StaticResource PrimaryTextLight}, Dark={StaticResource PrimaryTextDark}}" />
                     <Label Text="{Binding ErrorMessage}"
-                        TextColor="{StaticResource Error}">
+                        TextColor="{AppThemeBinding Light={StaticResource ErrorLight}, Dark={StaticResource ErrorDark}}">
                         <Label.Triggers>
                             <DataTrigger TargetType="Label" Binding="{Binding ErrorMessage}" Value="">
                                 <Setter Property="IsVisible" Value="False" />
@@ -52,7 +52,7 @@
 
                     <Button Text="{Binding SaveButtonText}"
                         Command="{Binding SaveTodoCommand}"
-                        BackgroundColor="{StaticResource PrimaryAccent}"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryAccentLight}, Dark={StaticResource PrimaryAccentDark}}"
                         TextColor="White" />
                     <Button Text="Peruuta"
                         Command="{Binding CancelCommand}"
@@ -63,7 +63,7 @@
                     <Button Text="Poista tehtävä"
                         Command="{Binding DeleteTodoCommand}"
                         IsVisible="{Binding IsEditing}"
-                        BackgroundColor="{StaticResource Error}"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource ErrorLight}, Dark={StaticResource ErrorDark}}"
                         TextColor="White" />
                 </VerticalStackLayout>
             </Border>

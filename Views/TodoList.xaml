@@ -17,7 +17,7 @@
 
         <ActivityIndicator IsRunning="{Binding IsLoading}"
             IsVisible="{Binding IsLoading}"
-            Color="{StaticResource PrimaryAccent}"
+            Color="{AppThemeBinding Light={StaticResource PrimaryAccentLight}, Dark={StaticResource PrimaryAccentDark}}"
             Grid.Row="1" />
 
         <Border Grid.Row="2"
@@ -29,17 +29,17 @@
             <FlexLayout Direction="Row" Wrap="Wrap" JustifyContent="SpaceBetween">
                 <Button Text="Lajittele prioriteetin mukaan"
                     Command="{Binding SortByPriorityCommand}"
-                    BackgroundColor="{StaticResource PrimaryAccent}"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource PrimaryAccentLight}, Dark={StaticResource PrimaryAccentDark}}"
                     TextColor="White"
                     Margin="0,0,8,8" />
                 <Button Text="Lajittele eräpäivän mukaan"
                     Command="{Binding SortByDueDateCommand}"
-                    BackgroundColor="{StaticResource SecondaryAccent}"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource SecondaryAccentLight}, Dark={StaticResource SecondaryAccentDark}}"
                     TextColor="White"
                     Margin="0,0,8,8" />
                 <Button Text="{Binding ShowDoneButtonText}"
                     Command="{Binding ToggleShowDoneCommand}"
-                    BackgroundColor="{StaticResource Success}"
+                    BackgroundColor="{AppThemeBinding Light={StaticResource SuccessLight}, Dark={StaticResource SuccessDark}}"
                     TextColor="White"
                     Margin="0,0,8,8" />
             </FlexLayout>
@@ -64,7 +64,7 @@
                             <Grid ColumnDefinitions="Auto,*,Auto,Auto" RowDefinitions="Auto,Auto" ColumnSpacing="8" RowSpacing="4">
                                 <Button Text="Valmis"
                                     Clicked="OnToggleDoneClicked"
-                                    BackgroundColor="{StaticResource Success}"
+                                    BackgroundColor="{AppThemeBinding Light={StaticResource SuccessLight}, Dark={StaticResource SuccessDark}}"
                                     TextColor="White">
                                     <Button.Triggers>
                                         <DataTrigger TargetType="Button" Binding="{Binding IsDone}" Value="True">
@@ -93,7 +93,7 @@
                                 <Button Grid.Column="3" Grid.RowSpan="2"
                                     Text="Muokkaa"
                                     Clicked="OnEditTodoClicked"
-                                    BackgroundColor="{StaticResource SecondaryAccent}"
+                                    BackgroundColor="{AppThemeBinding Light={StaticResource SecondaryAccentLight}, Dark={StaticResource SecondaryAccentDark}}"
                                     TextColor="White" />
                             </Grid>
                         </Border>

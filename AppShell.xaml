@@ -6,7 +6,22 @@
     xmlns:local="clr-namespace:LifeManagementApp"
     xmlns:views="clr-namespace:LifeManagementApp.Views"
     Title="LifeManagementApp"
-    FlyoutBehavior="Disabled">
+    FlyoutBehavior="Disabled"
+    x:Name="AppShellRoot"
+    BackgroundColor="{AppThemeBinding Light={StaticResource MainBackgroundLight}, Dark={StaticResource MainBackgroundDark}}"
+    TitleColor="{AppThemeBinding Light={StaticResource PrimaryTextLight}, Dark={StaticResource PrimaryTextDark}}"
+    TabBarBackgroundColor="{AppThemeBinding Light={StaticResource SurfaceLight}, Dark={StaticResource SurfaceDark}}"
+    TabBarTitleColor="{AppThemeBinding Light={StaticResource PrimaryAccentLight}, Dark={StaticResource PrimaryAccentDark}}"
+    TabBarUnselectedColor="{AppThemeBinding Light={StaticResource SecondaryTextLight}, Dark={StaticResource SecondaryTextDark}}">
+
+    <Shell.ToolbarItems>
+        <ToolbarItem Text="Light"
+            Command="{Binding Source={x:Reference AppShellRoot}, Path=LightModeCommand}"
+            Order="Primary" />
+        <ToolbarItem Text="Dark"
+            Command="{Binding Source={x:Reference AppShellRoot}, Path=DarkModeCommand}"
+            Order="Primary" />
+    </Shell.ToolbarItems>
 
     <TabBar>
 
