@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
+using LifeManagementApp.Services;
 
 namespace LifeManagementApp
 {
@@ -11,7 +12,21 @@ namespace LifeManagementApp
 
         protected override Window CreateWindow(IActivationState? activationState)
         {
-            return new Window(new AppShell());
+            var window = new Window(new AppShell());
+
+            // Initialize theme from service
+            var themeService = ServiceHelper.Current.GetService<IThemeService>();
+            if (themeService != null)
+            {
+                themeService.SetTheme(themeService.CurrentTheme);
+            }
+
+            return window;
         }
+    }
+
+    internal static class ServiceHelper
+    {
+        public static IServiceProvider Current { get; set; } = null!;
     }
 }

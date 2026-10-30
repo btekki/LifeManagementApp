@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging;
 using LifeManagementApp.Data;
 using Microsoft.EntityFrameworkCore;
 using LifeManagementApp.Services;
@@ -20,6 +20,7 @@ namespace LifeManagementApp
                 options.UseSqlite($"Data Source={dbPath}"));
 
             //Services here
+            builder.Services.AddSingleton<IThemeService, ThemeService>();
             builder.Services.AddScoped<IWeatherService, OpenMeteoWeatherService>();
             builder.Services.AddHttpClient<OpenMeteoWeatherService>();
             builder.Services.AddScoped<ITodoRepository, TodoRepository>();
@@ -31,8 +32,6 @@ namespace LifeManagementApp
             builder.Services.AddTransient<AddTodoPage>();
             builder.Services.AddTransient<AppShell>();
 
-
-            
             InitializeDatabase(dbPath);
 
             builder
@@ -41,13 +40,16 @@ namespace LifeManagementApp
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-                });
+                })
+                .ConfigureTheme();
 
 #if DEBUG
-    		builder.Logging.AddDebug();
+            builder.Logging.AddDebug();
 #endif
 
-            return builder.Build();
+            var app = builder.Build();
+            ServiceHelper.Current = app.Services;
+            return app;
         }
 
         private static string GetDatabasePath()
@@ -67,6 +69,24 @@ namespace LifeManagementApp
             {
                 context.Database.EnsureCreated();
             }
+        }
+
+        private static MauiAppBuilder ConfigureTheme(this MauiAppBuilder builder)
+        {
+            // Ensure theme resources are loaded early during app initialization
+            builder.ConfigureMauiHandlers(handlers =>
+            {
+                try
+                {
+                    // Theme initialization is handled in App.xaml.cs CreateWindow
+                    // This ensures resources are available when pages are initialized
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine($"Failed to configure theme: {ex.Message}");
+                }
+            });
+            return builder;
         }
     }
 }

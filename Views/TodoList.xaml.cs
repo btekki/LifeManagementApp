@@ -26,6 +26,14 @@ public partial class TodoListPage : ContentPage
         await viewModel.ToggleTodoCommand.ExecuteAsync(todo);
     }
 
+    private async void OnTodoCheckedChanged(object sender, CheckedChangedEventArgs e)
+    {
+        if(sender is not CheckBox checkBox || checkBox.BindingContext is not TodoItem todo || BindingContext is not TodoListViewModel viewModel)
+            return;
+
+        await viewModel.ToggleTodoCommand.ExecuteAsync(todo);
+    }
+
     private async void OnEditTodoClicked(object sender, EventArgs e)
     {
         if(sender is not Button button || button.BindingContext is not TodoItem todo)

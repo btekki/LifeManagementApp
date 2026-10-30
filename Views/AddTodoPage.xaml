@@ -4,30 +4,74 @@
     xmlns:vm="clr-namespace:LifeManagementApp.ViewModels"
     x:Class="LifeManagementApp.Views.AddTodoPage"
     x:DataType="vm:AddTodoViewModel"
-    Title="Add todo">
+    Title="Lisää tehtävä"
+    BackgroundColor="{StaticResource BackgroundColor}">
 
-    <VerticalStackLayout Padding="20" Spacing="12">
-        <Entry Placeholder="Title" Keyboard="Text" Text="{Binding Title}" />
-        <Label Text="{Binding Priority, StringFormat='Priority: {0}'}" />
-        <Stepper Minimum="1" Maximum="5" Increment="1" Value="{Binding Priority}" />
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="12">
+            <!-- Form Container -->
+            <Border Style="{StaticResource ContainerStyle}">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="Tehtävän tiedot" Style="{StaticResource SubheadingLabelStyle}" />
 
-        <HorizontalStackLayout Spacing="12">
-            <Label Text="Aseta eräpäivä" VerticalOptions="Center" />
-            <Switch IsToggled="{Binding HasDueDate}" />
-        </HorizontalStackLayout>
+                    <Entry Placeholder="Otsikko" 
+                           Keyboard="Text" 
+                           Text="{Binding Title}"
+                           Style="{StaticResource InputEntryStyle}" />
 
-        <DatePicker Date="{Binding DueDatePickerDate}" IsEnabled="{Binding HasDueDate}" />
-        <Label Text="{Binding ErrorMessage}" TextColor="Red">
-            <Label.Triggers>
-                <DataTrigger TargetType="Label" Binding="{Binding ErrorMessage}" Value="">
-                    <Setter Property="IsVisible" Value="False" />
-                </DataTrigger>
-            </Label.Triggers>
-        </Label>
+                    <!-- Priority Container -->
+                    <Border Style="{StaticResource CardStyle}">
+                        <VerticalStackLayout Spacing="8">
+                            <Label Text="{Binding Priority, StringFormat='Prioriteetti: {0}'}" 
+                                   Style="{StaticResource BodyLabelStyle}" />
+                            <Stepper Minimum="1" Maximum="5" Increment="1" Value="{Binding Priority}" />
+                        </VerticalStackLayout>
+                    </Border>
 
-        <Button Text="{Binding SaveButtonText}" Command="{Binding SaveTodoCommand}" />
-        <Button Text="Peruuta" Command="{Binding CancelCommand}" />
-        <Button Text="Poista tehtävä" Command="{Binding DeleteTodoCommand}" IsVisible="{Binding IsEditing}" TextColor="Red" />
+                    <!-- Due Date Container -->
+                    <Border Style="{StaticResource CardStyle}">
+                        <VerticalStackLayout Spacing="8">
+                            <HorizontalStackLayout Spacing="12">
+                                <Label Text="Aseta eräpäivä" 
+                                       VerticalOptions="Center"
+                                       Style="{StaticResource BodyLabelStyle}" />
+                                <Switch IsToggled="{Binding HasDueDate}" />
+                            </HorizontalStackLayout>
+                            <DatePicker Date="{Binding DueDatePickerDate}" IsEnabled="{Binding HasDueDate}" />
+                        </VerticalStackLayout>
+                    </Border>
+                </VerticalStackLayout>
+            </Border>
 
-    </VerticalStackLayout>
+            <!-- Error Message Container -->
+            <Border Style="{StaticResource ContainerStyle}">
+                <Label Text="{Binding ErrorMessage}" 
+                       TextColor="{StaticResource ErrorColor}"
+                       Style="{StaticResource BodyLabelStyle}">
+                    <Label.Triggers>
+                        <DataTrigger TargetType="Label" 
+                                     Binding="{Binding ErrorMessage}" 
+                                     Value="">
+                            <Setter Property="IsVisible" Value="False" />
+                        </DataTrigger>
+                    </Label.Triggers>
+                </Label>
+            </Border>
+
+            <!-- Action Buttons Container -->
+            <Border Style="{StaticResource ContainerStyle}">
+                <HorizontalStackLayout Spacing="12">
+                    <Button Text="Tallenna" 
+                            Command="{Binding SaveTodoCommand}"
+                            Style="{StaticResource PrimaryButtonStyle}"
+                            HorizontalOptions="FillAndExpand" />
+                    <Button Text="Peruuta" 
+                            Command="{Binding CancelCommand}"
+                            Style="{StaticResource SecondaryButtonStyle}"
+                            HorizontalOptions="FillAndExpand" />
+                </HorizontalStackLayout>
+            </Border>
+
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

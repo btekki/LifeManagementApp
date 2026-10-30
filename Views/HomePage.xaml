@@ -4,47 +4,95 @@
     xmlns:vm="clr-namespace:LifeManagementApp.ViewModels"
     xmlns:models="clr-namespace:LifeManagementApp.Models"
     x:Class="LifeManagementApp.Views.HomePage"
-    x:DataType="vm:HomeViewModel">
+    x:DataType="vm:HomeViewModel"
+    BackgroundColor="{StaticResource BackgroundColor}">
 
     <ScrollView>
-        <VerticalStackLayout Padding="24" Spacing="16">
-            <Label Text="3 Tärkeintä tehtävää"
-                FontSize="24"
-                FontAttributes="Bold" />
+        <VerticalStackLayout Padding="16" Spacing="16">
+            <!-- Theme Toggle Container -->
+            <Border Style="{StaticResource ContainerStyle}">
+                <HorizontalStackLayout Spacing="8">
+                    <Button Text="Vaalea tila" 
+                            Command="{Binding SetLightThemeCommand}"
+                            Style="{StaticResource PrimaryButtonStyle}"
+                            HorizontalOptions="FillAndExpand">
+                        <Button.Triggers>
+                            <DataTrigger TargetType="Button"
+                                Binding="{Binding CurrentTheme}"
+                                Value="Light">
+                                <Setter Property="IsEnabled" Value="False" />
+                                <Setter Property="Opacity" Value="0.5" />
+                            </DataTrigger>
+                        </Button.Triggers>
+                    </Button>
+                    <Button Text="Tumma tila" 
+                            Command="{Binding SetDarkThemeCommand}"
+                            Style="{StaticResource SecondaryButtonStyle}"
+                            HorizontalOptions="FillAndExpand">
+                        <Button.Triggers>
+                            <DataTrigger TargetType="Button"
+                                Binding="{Binding CurrentTheme}"
+                                Value="Dark">
+                                <Setter Property="IsEnabled" Value="False" />
+                                <Setter Property="Opacity" Value="0.5" />
+                            </DataTrigger>
+                        </Button.Triggers>
+                    </Button>
+                </HorizontalStackLayout>
+            </Border>
 
-            <ActivityIndicator IsRunning="{Binding IsLoading}"
-                                IsVisible="{Binding IsLoading}" />
-            
-            <CollectionView ItemsSource="{Binding TopThreeTodos}">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="models:TodoItem">
-                        <Grid ColumnDefinitions="*,Auto"
-                            RowDefinitions="Auto, Auto" Padding="8">
-                        <Label Text="{Binding Title}" />
-                        <Label Grid.Row="1"
-                               Text="{Binding Priority}" />
-                        <Label Grid.Column="1"
-                               Grid.RowSpan="2"
-                               Text="{Binding DueDate, StringFormat='{}{0:d}'}" />
+            <!-- Top 3 Todos Container -->
+            <Border Style="{StaticResource ContainerStyle}">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="Top 3 tehtävät" Style="{StaticResource HeadingLabelStyle}" />
 
-                    </Grid>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+                    <ActivityIndicator IsRunning="{Binding IsLoading}"
+                                        IsVisible="{Binding IsLoading}" />
 
-            <Label Text="{Binding CurrentWeather.Temperature, StringFormat='{}{0:F1} °C'}" />
-            <Label Text="{Binding CurrentWeather.WindSpeed, StringFormat='{}{0:F1} m/s'}" />
-            <Label Text="{Binding KiteSurfAlert}" 
-                    TextColor="Red">
-                <Label.Triggers>
-                    <DataTrigger TargetType="Label"
-                        Binding="{Binding KiteSurfAlert}"
-                        Value="">
-                        <Setter Property="IsVisible" Value="False" />
-                    </DataTrigger>
-                </Label.Triggers> 
-            </Label>   
-            
+                    <CollectionView ItemsSource="{Binding TopThreeTodos}">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="models:TodoItem">
+                                <Border Style="{StaticResource CardStyle}">
+                                    <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto" Padding="0">
+                                        <Label Text="{Binding Title}" Style="{StaticResource BodyLabelStyle}" />
+                                        <Label Grid.Row="1" Text="{Binding Priority, StringFormat='Prioriteetti: {0}'}" 
+                                               Style="{StaticResource CaptionLabelStyle}" />
+                                        <Label Grid.Column="1" Grid.RowSpan="2" 
+                                               Text="{Binding DueDate, StringFormat='{0:dd.MM.yyyy}'}"
+                                               Style="{StaticResource CaptionLabelStyle}" />
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Weather Info Container -->
+            <Border Style="{StaticResource ContainerStyle}">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="Sää" Style="{StaticResource SubheadingLabelStyle}" />
+                    <Label Text="{Binding CurrentWeather.Temperature, StringFormat='{0:F1} °C'}" 
+                           Style="{StaticResource BodyLabelStyle}" />
+                    <Label Text="{Binding CurrentWeather.WindSpeed, StringFormat='Tuuli: {0:F1} m/s'}" 
+                           Style="{StaticResource BodyLabelStyle}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Alert Container -->
+            <Border Style="{StaticResource ContainerStyle}">
+                <Label Text="{Binding KiteSurfAlert}" 
+                       TextColor="{StaticResource ErrorColor}"
+                       Style="{StaticResource BodyLabelStyle}">
+                    <Label.Triggers>
+                        <DataTrigger TargetType="Label"
+                            Binding="{Binding KiteSurfAlert}"
+                            Value="">
+                            <Setter Property="IsVisible" Value="False" />
+                        </DataTrigger>
+                    </Label.Triggers>
+                </Label>
+            </Border>
 
         </VerticalStackLayout>
     </ScrollView>

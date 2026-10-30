@@ -12,7 +12,7 @@
 
         <HorizontalStackLayout Spacing="8">
             <Button Text="Lajittele prioriteetin mukaan" Command="{Binding SortByPriorityCommand}" />
-            <Button Text="Lajittele erÃ¤pÃ¤ivÃ¤n mukaan" Command="{Binding SortByDueDateCommand}" />
+            <Button Text="Lajittele eräpäivän mukaan" Command="{Binding SortByDueDateCommand}" />
             <Button Text="{Binding ShowDoneButtonText}" Command="{Binding ToggleShowDoneCommand}" />
         </HorizontalStackLayout>
 
@@ -51,8 +51,7 @@
             </CollectionView.ItemTemplate>
         </CollectionView>
 
-        <Button Text="LisÃ¤Ã¤ uusi tehtÃ¤vÃ¤" Clicked="OnAddTodoClicked" />
+        <Button Text="Lisää uusi tehtävä" Clicked="OnAddTodoClicked" />
     </VerticalStackLayout>
 </ContentPage>           
-
 

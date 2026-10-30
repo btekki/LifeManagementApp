@@ -10,6 +10,7 @@ public partial class HomeViewModel : ObservableObject
 {
     private readonly IWeatherService _weatherService;
     private readonly ITodoRepository _todoRepository;
+    private readonly IThemeService _themeService;
 
     private const double latitude = 0.0;//tähän paskmaijan tai vastaavan hauskan paikan koordinaatit
     private const double longitude = 0.0;
@@ -26,13 +27,19 @@ public partial class HomeViewModel : ObservableObject
     [ObservableProperty]
     private bool isLoading;
 
+    [ObservableProperty]
+    private AppTheme currentTheme;
+
     public HomeViewModel(
         IWeatherService weatherService,
-        ITodoRepository todoRepository
+        ITodoRepository todoRepository,
+        IThemeService themeService
     )
     {
         _weatherService = weatherService;
         _todoRepository = todoRepository;
+        _themeService = themeService;
+        CurrentTheme = _themeService.CurrentTheme;
     }
     [RelayCommand]
     private async Task LoadDataAsync()
@@ -67,5 +74,19 @@ public partial class HomeViewModel : ObservableObject
         {
             isLoading = false;
         }
+    }
+
+    [RelayCommand]
+    private void SetLightTheme()
+    {
+        _themeService.SetTheme(AppTheme.Light);
+        CurrentTheme = AppTheme.Light;
+    }
+
+    [RelayCommand]
+    private void SetDarkTheme()
+    {
+        _themeService.SetTheme(AppTheme.Dark);
+        CurrentTheme = AppTheme.Dark;
     }
 }
