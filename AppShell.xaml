@@ -11,19 +11,19 @@
     <TabBar>
 
         <ShellContent
-            Title="Home"
+            Title="Koti"
             Icon="home.png"
             ContentTemplate="{DataTemplate views:HomePage}"
             Route="Home" />
 
         <ShellContent
-            Title="Todo List"
+            Title="Tehtävälista"
             Icon="list.png"
             ContentTemplate="{DataTemplate views:TodoListPage}"
             Route="TodoList" />
 
         <ShellContent
-            Title="Add Todo"
+            Title="Lisää tehtävä"
             Icon="add.png"
             ContentTemplate="{DataTemplate views:AddTodoPage}"
             Route="AddTodo" />
