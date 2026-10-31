@@ -14,8 +14,10 @@ namespace LifeManagementApp.Converters
             return priority switch
             {
                 1 => Colors.Red,
-                2 => Colors.Yellow,
-                3 => Colors.Green,
+                2 => Colors.Orange,
+                3 => Colors.Yellow,
+                4=>Colors.LightGreen,
+                5=>Colors.Green,
                 _ => Colors.Gray
             };
         }

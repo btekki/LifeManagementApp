@@ -96,7 +96,7 @@ public partial class TodoListViewModel : ObservableObject
 
         IEnumerable<TodoItem> sortedTodos = SortBy switch
         {
-            0 => visibleTodos.OrderByDescending(todo => todo.Priority),
+            0 => visibleTodos.OrderBy(todo => todo.Priority),
             1 => visibleTodos
                 .Where(todo =>
                     !todo.DueDate.HasValue || todo.DueDate.Value.Date >= DateTime.Today)
