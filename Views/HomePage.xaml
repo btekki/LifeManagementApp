@@ -91,7 +91,7 @@
                         FontAttributes="Bold"
                         TextColor="{AppThemeBinding Light={StaticResource SecondaryAccentLight}, Dark={StaticResource SecondaryAccentDark}}" />
 
-                    <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                    <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto" ColumnSpacing="12" RowSpacing="16">
                         <!-- Temperature -->
                         <VerticalStackLayout Spacing="4">
                             <Label Text="Lämpötila"
@@ -112,6 +112,23 @@
                                 FontSize="20"
                                 FontAttributes="Bold"
                                 TextColor="{AppThemeBinding Light={StaticResource PrimaryTextLight}, Dark={StaticResource PrimaryTextDark}}" />
+                        </VerticalStackLayout>
+                        
+                        <!-- Location -->
+                        <VerticalStackLayout Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Spacing="12">
+                            <Label Text="Sijainti" FontSize="18" FontAttributes="Bold" TextColor="{AppThemeBinding Light={StaticResource PrimaryAccentLight}, Dark={StaticResource PrimaryAccentDark}}" />
+                            <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                                <VerticalStackLayout Spacing="4">
+                                    <Label Text="Leveysaste" FontSize="12" TextColor="{AppThemeBinding Light={StaticResource SecondaryTextLight},Dark={StaticResource SecondaryTextDark}}"/>
+                                    <Entry Text="{Binding LatitudeText}" Keyboard="Numeric" Placeholder="Esim 60.17" ClearButtonVisibility="WhileEditing"/>
+                                </VerticalStackLayout>
+                                <VerticalStackLayout Grid.Column="1" Spacing="4">
+                                    <Label Text="Pituusaste" FontSize="12" TextColor="{AppThemeBinding Light={StaticResource SecondaryTextLight}, Dark={StaticResource SecondaryTextDark}}"/>
+                                    <Entry Text="{Binding LongitudeText}" Keyboard="Numeric" Placeholder="Esim 24.93" ClearButtonVisibility="WhileEditing"/>
+                                </VerticalStackLayout>
+                            </Grid>
+                            <Button Text="Hae sää" Command="{Binding FetchWeatherCommand}" IsEnabled="{Binding IsLoading, Converter={StaticResource InverseBoolConverter}, FallbackValue=True}"/>
+                            <Label Text="{Binding ErrorMessage}" IsVisible="{Binding ErrorMessage, Converter={StaticResource StringNotEmptyConverter}, FallbackValue=False}" TextColor="Red" LineBreakMode="WordWrap"/>
                         </VerticalStackLayout>
                     </Grid>
                 </VerticalStackLayout>

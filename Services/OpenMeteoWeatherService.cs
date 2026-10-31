@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using LifeManagementApp.Models;
 using System.Text.Json.Serialization;
+using System.Globalization;
 
 namespace LifeManagementApp.Services
 {
@@ -20,15 +21,19 @@ namespace LifeManagementApp.Services
         {
             try
             {
-                var url = $"{BaseUrl}?latitude={latitude}&longitude={longitude}&current=temperature_2m,wind_speed_10m&wind_speed_unit=ms";
+                var latitudeValue = latitude.ToString(CultureInfo.InvariantCulture);
+                var longitudeValue = longitude.ToString(CultureInfo.InvariantCulture);
+
+                var url = $"{BaseUrl}?latitude={latitudeValue}"+$"&longitude={longitudeValue}"+$"&current=temperature_2m,wind_speed_10m"+ $"&wind_speed_unit=ms";
 
                 var response = await _httpClient.GetAsync(url);
                 response.EnsureSuccessStatusCode();
 
                 var jsonContent = await response.Content.ReadAsStringAsync();
+
                 var weatherResponse = System.Text.Json.JsonSerializer.Deserialize<OpenMeteoWeatherResponse>(jsonContent);
 
-                if (weatherResponse?.Current == null)
+                if (weatherResponse?.Current is null)
                     return null;
 
                 return new WeatherInfo
@@ -36,12 +41,12 @@ namespace LifeManagementApp.Services
                     Temperature = weatherResponse.Current.Temperature,
                     WindSpeed = weatherResponse.Current.WindSpeed,
                     LastUpdated = DateTime.UtcNow,
-                    Location = $"{latitude},{longitude}"
+                    Location = $"{latitudeValue},{longitudeValue}"
                 };
             }
             catch (HttpRequestException ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Network error: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"Weather request error: {ex.Message}");
                 return null;
             }
             catch (Exception ex)
@@ -51,12 +56,12 @@ namespace LifeManagementApp.Services
             }
         }
 
-        private class OpenMeteoWeatherResponse
+        private sealed class OpenMeteoWeatherResponse
         {
             [JsonPropertyName("current")]
             public CurrentWeather? Current { get; set; }
         }
-        private class CurrentWeather
+        private sealed class CurrentWeather
         {
             [JsonPropertyName("temperature_2m")]
             public double Temperature { get; set; }
