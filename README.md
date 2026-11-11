@@ -1,5 +1,8 @@
 # LifeManagementApp
 
+Tämä on CSP kurssin projektityö, joka tulee poistumaan kurssin päätyttyä
+
+
 LifeManagementApp on .NET MAUI -sovellus arjen tehtävien hallintaan. Se kokoaa
 tärkeimmät tehtävät ja tämänhetkiset säätiedot yhteen näkymään ja tallentaa
 tehtävät laitteen paikalliseen SQLite-tietokantaan.
