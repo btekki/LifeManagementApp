@@ -30,7 +30,7 @@ namespace LifeManagementApp.Data
                 entity.Property(e => e.IsDone)
                     .HasDefaultValue(false);
                 entity.Property(e => e.CreatedAt)
-                    .HasDefaultValueSql("GETUTCDATE()");
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
             });
         }

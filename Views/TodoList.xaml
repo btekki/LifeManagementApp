@@ -62,20 +62,7 @@
                             Padding="10"
                             Margin="0,0,0,8">
                             <Grid ColumnDefinitions="Auto,*,Auto,Auto" RowDefinitions="Auto,Auto" ColumnSpacing="8" RowSpacing="4">
-                                <Button Text="Valmis"
-                                    Clicked="OnToggleDoneClicked"
-                                    BackgroundColor="{AppThemeBinding Light={StaticResource SuccessLight}, Dark={StaticResource SuccessDark}}"
-                                    TextColor="White">
-                                    <Button.Triggers>
-                                        <DataTrigger TargetType="Button" Binding="{Binding IsDone}" Value="True">
-                                            <Setter Property="Text" Value="Kumoa" />
-                                        </DataTrigger>
-                                    </Button.Triggers>
-                                </Button>
-                                <Label Grid.Column="1"
-                                    Text="{Binding Title}"
-                                    TextColor="{AppThemeBinding Light={StaticResource PrimaryTextLight}, Dark={StaticResource PrimaryTextDark}}"
-                                    VerticalOptions="Center">
+                                <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding Title}" FontSize="18" FontAttributes="Bold" HorizontalTextAlignment="Center" HorizontalOptions="Fill" TextColor="{AppThemeBinding Light={StaticResource PrimaryTextLight}, Dark={StaticResource PrimaryTextDark}}" LineBreakMode="WordWrap">
                                     <Label.Triggers>
                                         <DataTrigger TargetType="Label" Binding="{Binding IsDone}" Value="True">
                                             <Setter Property="TextDecorations" Value="Strikethrough" />
@@ -83,18 +70,22 @@
                                         </DataTrigger>
                                     </Label.Triggers>
                                 </Label>
-                                <Label Grid.Column="1" Grid.Row="1"
-                                    Text="{Binding Priority}"
-                                    TextColor="{Binding Priority, Converter={StaticResource PriorityToColorConverter}}" />
-                                <Label Grid.Column="2" Grid.RowSpan="2"
-                                    Text="{Binding DueDate, StringFormat='{}{0:d}'}"
-                                    TextColor="{AppThemeBinding Light={StaticResource SecondaryTextLight}, Dark={StaticResource SecondaryTextDark}}"
-                                    VerticalOptions="Center" />
-                                <Button Grid.Column="3" Grid.RowSpan="2"
-                                    Text="Muokkaa"
-                                    Clicked="OnEditTodoClicked"
-                                    BackgroundColor="{AppThemeBinding Light={StaticResource SecondaryAccentLight}, Dark={StaticResource SecondaryAccentDark}}"
-                                    TextColor="White" />
+                                <HorizontalStackLayout Grid.Row="1" Grid.Column="0" Spacing="16" VerticalOptions="Center">
+                                    <Border Stroke="{Binding Priority, Converter={StaticResource PriorityToColorConverter}}" StrokeThickness="2" StrokeShape="RoundRectangle 8" Padding="8,4">
+                                        <Label Text="{Binding Priority, StringFormat='Prioriteetti: {0}'}" FontSize="15" FontAttributes="Bold" TextColor="{Binding Priority, Converter={StaticResource PriorityToColorConverter}}" VerticalOptions="Center" />
+                                    </Border>
+                                    <Label Text="{Binding DueDate, StringFormat='Eräpäivä: {0:d}'}" FontSize="13" TextColor="{AppThemeBinding Light={StaticResource SecondaryTextLight}, Dark={StaticResource SecondaryTextDark}}" VerticalOptions="Center" />
+                                </HorizontalStackLayout>
+                                <VerticalStackLayout Grid.Row="1" Grid.Column="1" Spacing="6" HorizontalOptions="End" VerticalOptions="Center">
+                                    <Button Text="Valmis" Clicked="OnToggleDoneClicked" Padding="10,4" FontSize="12" HeightRequest="38" MinimumWidthRequest="78" BackgroundColor="{AppThemeBinding Light={StaticResource SuccessLight}, Dark={StaticResource SuccessDark}}" TextColor="White">
+                                        <Button.Triggers>
+                                            <DataTrigger TargetType="Button" Binding="{Binding IsDone}" Value="True">
+                                                <Setter Property="Text" Value="Kumoa" />
+                                            </DataTrigger>
+                                        </Button.Triggers>
+                                    </Button>
+                                    <Button Text="Muokkaa" Clicked="OnEditTodoClicked" Padding="8,3" FontSize="12" HeightRequest="34" MinimumWidthRequest="78" BackgroundColor="{AppThemeBinding Light={StaticResource SecondaryAccentLight}, Dark={StaticResource SecondaryAccentDark}}" TextColor="White" />
+                                </VerticalStackLayout>
                             </Grid>
                         </Border>
                     </SwipeView>

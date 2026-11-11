@@ -22,27 +22,15 @@ tehtävät laitteen paikalliseen SQLite-tietokantaan.
 
 - .NET 10 SDK
 - .NET MAUI -työkuorma
-- Androidin kehitykseen Android SDK sekä Android-emulaattori tai -laite.
-  iOS-, Mac Catalyst- ja Windows-kohteet vaativat vastaavan alustan
-  kehitystyökalut. Projektin Linux-kohteeksi on määritelty Android.
+
 
 Kloonaa projekti ja asenna tarvittava MAUI-työkuorma:
 
-```bash
 git clone https://github.com/btekki/LifeManagementApp.git
 cd LifeManagementApp
 dotnet workload install maui
 dotnet restore
-```
-
-Käynnistä Android-emulaattori tai yhdistä laite ja suorita projektin juuressa:
-
-```bash
-dotnet build -t:Run -f net10.0-android
-```
-
-Visual Studio -kehityksessä avaa `LifeManagementApp.slnx`, valitse sopiva
-kohdealusta ja käynnistä sovellus IDE:stä.
+dotnet build .\LifeManagementApp.csproj -f net10.0-windows10.0.19041.0
 
 ## Rakenne
 
@@ -105,6 +93,11 @@ Kutsu sisältää seuraavat parametrit:
 | `current` | `temperature_2m,wind_speed_10m` |
 | `wind_speed_unit` | `ms` (metriä sekunnissa) |
 
-Etusivun nykyiset koordinaatit ovat koodissa `0.0, 0.0` ja ne ovat
-paikkamerkki. Aseta `HomeViewModel`-luokan koordinaateiksi halutun sijainnin
-leveys- ja pituusaste ennen varsinaista käyttöä.
+Etusivun nykyiset koordinaatit ovat koodissa `74.26, 19.02`, koska kyseisessä paikassa tuulee usein. Vähän kylmä voi toki olla.
+Käyttäjä voi itse vaihtaa toivomansa koordinaatit etusivulla.
+
+##Tekoälyn käyttö
+
+Tekoälyä on käytetty apuna projektin suunnittelussa, issueiden luonnissa, virheiden etsimisessä ja korjauksessa sekä dokumentoinnissa.
+Kaikki koodi on ihmisen kirjoittamaa ja siten ihmisen hyväksymää.
+Tekoälynä käytössä on ollut Github Copilot, Copilot käyttämä malli on vaihdellut projektin aikana.

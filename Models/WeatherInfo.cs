@@ -12,8 +12,14 @@ namespace LifeManagementApp.Models
 
         public required double WindSpeed { get; set; }
 
-        public DateTime LastUpdated { get; set; } = DateTime.Now;
+        public DateTime LastUpdated { get; set; } = DateTime.UtcNow;
 
         public string? Location { get; set; }
+
+        public double Latitude { get; set; }
+
+        public double Longitude { get; set; }
+
+        public DateTime Timestamp { get; set; } = DateTime.UtcNow;
     }
 }

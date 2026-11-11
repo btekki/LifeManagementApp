@@ -1,9 +1,11 @@
-﻿using System;
+﻿using LifeManagementApp.Models;
+using System;
 using System.Collections.Generic;
-using System.Text;
-using LifeManagementApp.Models;
-using System.Text.Json.Serialization;
 using System.Globalization;
+using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using WeatherModel = LifeManagementApp.Models.WeatherInfo;
 
 namespace LifeManagementApp.Services
 {
@@ -17,7 +19,7 @@ namespace LifeManagementApp.Services
             _httpClient = httpClient;
         }
 
-        public async Task<WeatherInfo?> GetCurrentWeatherAsync(double latitude, double longitude)
+        public async Task<WeatherModel?> GetCurrentWeatherAsync(double latitude, double longitude)
         {
             try
             {
@@ -26,27 +28,38 @@ namespace LifeManagementApp.Services
 
                 var url = $"{BaseUrl}?latitude={latitudeValue}"+$"&longitude={longitudeValue}"+$"&current=temperature_2m,wind_speed_10m"+ $"&wind_speed_unit=ms";
 
-                var response = await _httpClient.GetAsync(url);
+                using HttpResponseMessage response = await _httpClient.GetAsync(url);
                 response.EnsureSuccessStatusCode();
 
-                var jsonContent = await response.Content.ReadAsStringAsync();
+                string jsonContent = await response.Content.ReadAsStringAsync();
 
-                var weatherResponse = System.Text.Json.JsonSerializer.Deserialize<OpenMeteoWeatherResponse>(jsonContent);
+                OpenMeteoWeatherResponse? weatherResponse = JsonSerializer.Deserialize<OpenMeteoWeatherResponse>(jsonContent);
 
                 if (weatherResponse?.Current is null)
                     return null;
 
-                return new WeatherInfo
+                DateTime timestamp = DateTime.UtcNow;
+
+                return new WeatherModel
                 {
                     Temperature = weatherResponse.Current.Temperature,
                     WindSpeed = weatherResponse.Current.WindSpeed,
-                    LastUpdated = DateTime.UtcNow,
-                    Location = $"{latitudeValue},{longitudeValue}"
+                    LastUpdated = timestamp,
+                    Location = $"{latitudeValue},{longitudeValue}",
+                    Latitude = latitude,
+                    Longitude = longitude
                 };
             }
             catch (HttpRequestException ex)
             {
                 System.Diagnostics.Debug.WriteLine($"Weather request error: {ex.Message}");
+                return null;
+            }
+            catch (JsonException ex)
+            {
+                System.Diagnostics.Debug.WriteLine(
+                    $"Weather JSON error: {ex.Message}");
+
                 return null;
             }
             catch (Exception ex)
@@ -70,17 +83,4 @@ namespace LifeManagementApp.Services
             public double WindSpeed { get; set; }
         }
     }
-}
-public class WeatherInfo
-{
-  public int Id { get; set; }
-  public required double Temperature { get; set; }
-  public required double WindSpeed { get; set; }
-  public DateTime LastUpdated { get; set; }
-  public string? Location { get; set; }
-
-  // Add these if other code expects them
-  public double Latitude { get; set; }
-  public double Longitude { get; set; }
-  public DateTime Timestamp { get; set; }
 }
